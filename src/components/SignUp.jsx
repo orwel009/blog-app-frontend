@@ -23,7 +23,11 @@ const SignUp = () => {
                         alert("An error occured")
                     }
                 }
-            ).catch()
+            ).catch(
+                (error)=>{
+                    alert(error.message)
+                }
+            )
         } else {
             alert("Error")
         }
