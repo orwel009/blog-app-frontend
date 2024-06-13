@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignIn = () => {
+    let navigate = useNavigate()
+    
     const [data,getData] = useState(
         {
             "email":"",
@@ -12,11 +14,14 @@ const SignIn = () => {
     const inputHandler = (event)=>{
         getData({...data,[event.target.name]:event.target.value})
     }
+    
     const readValue=()=>{
         axios.post("http://localhost:8080/signin",data).then(
             (response)=>{
                 if (response.data.status === "success") {
-                    alert(response.data.status)
+                    sessionStorage.setItem("token",response.data.token)
+                    sessionStorage.setItem("token",response.data.userId)
+                    navigate("/dashboard")
                 } else {
                     alert(response.data.status)
                 }
